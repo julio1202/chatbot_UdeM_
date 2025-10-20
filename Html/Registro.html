@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UdeM Bot - Login</title>
+  <link rel="stylesheet" href="/css/registro.css">
+</head>
+<body>
+
+      <!-- Fondo (URL en HTML) -->
+  <img class="bg-image" src="https://udemedellin.edu.co/wp-content/uploads/2022/07/Campus-udemedellin.jpg" alt="Campus UdeM">
+  <div class="bg-overlay"></div>
+
+  <div class="login-container">
+
+    <!-- Header -->
+    <header class="bot-header">
+    <img src="/imagenes/zorro.png" 
+        alt="Logo Chat Bot" class="bot-logo">
+    <h2 class="bot-title">UdeM Bot</h2>
+    </header>
+
+
+    <!-- Logo Universidad -->
+    <div class="logo-container">
+      <img src="https://udemedellin.edu.co/wp-content/uploads/2022/10/logo_udemedellin2.png" alt="Universidad de Medellín" class="udem-logo">
+    </div>
+
+    <!-- Identificación -->
+    <p class="identify-text">Identifíquese usando su cuenta en:</p>
+
+    <!-- Botón Microsoft -->
+    <button class="office-btn">
+      <img src="/imagenes/micro.png" alt="Microsoft Logo" class="microsoft-logo">
+      <span>Cuenta Office365</span>
+    </button>
+
+    <!-- Separador -->
+    <div class="separator">ó</div>
+
+    <!-- Formulario -->
+    <form action="login.php" method="post" class="login-form">
+      <label for="usuario">Usuario:</label>
+      <input type="text" id="usuario" name="usuario" required>
+
+      <label for="password">Contraseña:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit" class="login-btn">Acceder</button>
+    </form>
+
+    <!-- Links ayuda -->
+    <div class="help-links">
+      <a href="#">¿Olvidó su contraseña?</a><br>
+      <a href="#">Ayuda</a>
+    </div>
+
+  </div>
+</body>
+</html>

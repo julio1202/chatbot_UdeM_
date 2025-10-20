@@ -1,0 +1,171 @@
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Fondo: imagen incluida en el HTML */
+.bg-image {
+  position: fixed;
+  inset: 0;              /* top, right, bottom, left = 0 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;     /* que cubra toda la pantalla */
+  z-index: -2;           /* detrás de todo */
+}
+
+/* Overlay oscuro para resaltar el contenido */
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+/* Contenedor principal */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.login-container {
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.245); /* blanco semi-transparente */
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Header */
+.bot-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.bot-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.bot-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #b32025; /* rojo UdeM */
+}
+
+/* Logo UdeM */
+.logo-container img {
+  width: 280px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Texto de identificación */
+.identify-text {
+  font-size: 1rem;
+  background: #f3f3f3;
+  padding: 10px 15px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+/* Botón Microsoft */
+.office-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #f3f3f3;
+  border: none;
+  border-radius: 20px;
+  padding: 1px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: background 0.3s ease;
+}
+
+.office-btn:hover {
+  background: #e0e0e0;
+}
+
+.microsoft-logo {
+  width: 60px;
+  height: auto;
+}
+
+/* Separador */
+.separator {
+  margin: 15px 0;
+  font-weight: bold;
+  color: #444;
+  background: #f3f3f3;
+  border-radius: 20px;
+  display: inline-block;
+  padding: 5px 15px;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.login-form label {
+  font-size: 0.9rem;
+  color: #000000;
+}
+
+.login-form input {
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  background: #f3f3f3;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.login-btn {
+  background: #b32025; /* rojo UdeM */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #8e1a1e;
+}
+
+/* Links */
+.help-links {
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.help-links a {
+  color: #333;
+  text-decoration: none;
+}
+
+.help-links a:hover {
+  text-decoration: underline;
+}

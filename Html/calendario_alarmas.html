@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UdeM Bot - Calendario / Alarmas</title>
+
+  <!-- CSS único -->
+  <link rel="stylesheet" href="/css/calendario_alarmas.css">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="/imagenes/zorro.png" alt="Logo Bot" class="bot-logo" />
+        <span class="logo-text">UdeM Bot</span>
+      </div>
+
+      <nav class="menu">
+        <a href="menu_principal.html"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
+        <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
+        <a href="notas_rendimiento.html" class="active"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
+        <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
+        <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
+        <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
+        <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
+        <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
+      </nav>
+
+      <div class="settings">
+        <a href="#"><i class="fa-solid fa-user"></i></a>
+        <a href="#"><i class="fa-solid fa-gear"></i></a>
+      </div>
+    </aside>
+
+    <!-- Contenido -->
+    <main class="content">
+      <header class="calendar-topbar">
+        <div class="year-controls">
+          <button id="prevYear" class="ghost-btn"><i class="fa-solid fa-chevron-left"></i></button>
+          <h1><i class="fa-regular fa-calendar"></i> Calendario <span id="yearLabel"></span></h1>
+          <button id="nextYear" class="ghost-btn"><i class="fa-solid fa-chevron-right"></i></button>
+          <button id="goToday" class="pill-btn"><i class="fa-solid fa-bullseye"></i> Hoy</button>
+        </div>
+        <div class="brand-box">
+          <img src="https://udemedellin.edu.co/wp-content/uploads/2022/10/logo_udemedellin2.png" alt="Universidad de Medellín" />
+        </div>
+      </header>
+
+      <section id="yearCalendar" class="year-grid"></section>
+      <footer class="legend">
+        <span><span class="dot"></span> Día con recordatorios</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="reminderModal" class="modal">
+    <div class="modal-content">
+      <button class="close" id="closeModal"><i class="fa-solid fa-xmark"></i></button>
+      <h2><i class="fa-solid fa-bell"></i> Recordatorios</h2>
+      <p class="modal-date" id="selectedDateText"></p>
+
+      <ul id="remindersList" class="reminders-list"></ul>
+      <hr class="modal-sep"/>
+
+      <form id="reminderForm">
+        <div class="field">
+          <label for="remTitle">Título</label>
+          <input id="remTitle" type="text" placeholder="Ej: Entregar taller de Cálculo" required />
+        </div>
+        <div class="field two">
+          <div>
+            <label for="remTime">Hora</label>
+            <input id="remTime" type="time" />
+          </div>
+          <div>
+            <label for="remIcon">Ícono</label>
+            <select id="remIcon">
+              <option value="fa-solid fa-book">📘 Estudio</option>
+              <option value="fa-solid fa-clipboard-check">✅ Tarea</option>
+              <option value="fa-solid fa-flask">🧪 Lab</option>
+              <option value="fa-solid fa-users">👥 Grupo</option>
+              <option value="fa-solid fa-stethoscope">🩺 Salud</option>
+              <option value="fa-solid fa-bell">🔔 General</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="remNotes">Notas</label>
+          <textarea id="remNotes" rows="3" placeholder="Detalles adicionales..."></textarea>
+        </div>
+        <button class="primary-btn" type="submit"><i class="fa-solid fa-save"></i> Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="/js/calendario_alarmas.js"></script>
+</body>
+</html>
