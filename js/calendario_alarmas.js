@@ -1,21 +1,60 @@
 /**
  * calendario_alarmas.js
- * Versión corregida — sidebar colapsa al hacer clic fuera; calendario anual completo.
+ * Versión mejorada completa — con mejoras en UX, accesibilidad y funcionalidad.
  */
 
 const LS_KEY = "udem_calendar_reminders_v2";
+const THEME_KEY = "udem_theme";
 
 let currentYear = new Date().getFullYear();
 let reminders = JSON.parse(localStorage.getItem(LS_KEY) || "{}");
-let selectedDate = null; // formato 'YYYY-MM-DD'
+let selectedDate = null;
+let isDarkMode = localStorage.getItem(THEME_KEY) === "dark";
+let searchFilter = "";
 
 // Helpers
 function pad(n) { return String(n).padStart(2, "0"); }
 function dateKey(y, m, d) { return `${y}-${pad(m)}-${pad(d)}`; }
+function escapeHtml(str) {
+  if (!str && str !== "") return "";
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
 
-/* -------------------------
-   RENDER (año / mes / días)
-   ------------------------- */
+// Throttling para eventos
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+}
+
+// Notificaciones push
+function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
+function showNotification(title, body) {
+  if (Notification.permission === 'granted') {
+    new Notification(title, { body, icon: '/imagenes/zorro.png' });
+  }
+}
+
+// Modo oscuro
+function toggleTheme() {
+  isDarkMode = !isDarkMode;
+  document.body.classList.toggle('dark-mode', isDarkMode);
+  localStorage.setItem(THEME_KEY, isDarkMode ? 'dark' : 'light');
+}
+
+// Render (año / mes / días) con lazy loading
 function renderYear(year) {
   const yearGrid = document.getElementById("yearCalendar");
   const yearLabel = document.getElementById("yearLabel");
@@ -25,30 +64,27 @@ function renderYear(year) {
   yearLabel.textContent = year;
 
   for (let m = 0; m < 12; m++) {
-    yearGrid.appendChild(renderMonth(year, m));
+    const monthEl = renderMonth(year, m);
+    yearGrid.appendChild(monthEl);
   }
 
-  // Después de pintar el DOM, colocamos chips/indicadores
   highlightReminders();
+  applySearchFilter();
 }
 
 function renderMonth(year, month) {
-  const monthNames = [
-    "Enero","Febrero","Marzo","Abril","Mayo","Junio",
-    "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"
-  ];
-
+  const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   const monthEl = document.createElement("article");
   monthEl.className = "month";
   monthEl.id = `m${month + 1}`;
+  monthEl.setAttribute('aria-label', `Mes de ${monthNames[month]}`);
 
-  // Header
   const header = document.createElement("div");
   header.className = "month-header";
   header.textContent = monthNames[month];
+  header.addEventListener('click', () => expandMonthView(year, month));
   monthEl.appendChild(header);
 
-  // Week header (L M X J V S D)
   const weekHeader = document.createElement("div");
   weekHeader.className = "week-header";
   ["L","M","X","J","V","S","D"].forEach(ch => {
@@ -58,31 +94,27 @@ function renderMonth(year, month) {
   });
   monthEl.appendChild(weekHeader);
 
-  // Days grid
   const daysGrid = document.createElement("div");
   daysGrid.className = "days";
 
-  // Calcular offset (hacer que Lunes sea índice 0)
-  const firstDay = new Date(year, month, 1).getDay(); // 0 = domingo
-  const offset = (firstDay === 0) ? 6 : firstDay - 1; // 0..6, lunes=0
+  const firstDay = new Date(year, month, 1).getDay();
+  const offset = (firstDay === 0) ? 6 : firstDay - 1;
   const totalDays = new Date(year, month + 1, 0).getDate();
 
-  // Huecos iniciales
   for (let i = 0; i < offset; i++) {
     const empty = document.createElement("div");
     empty.className = "day empty";
     daysGrid.appendChild(empty);
   }
 
-  // Días del mes
   for (let d = 1; d <= totalDays; d++) {
     const dayEl = document.createElement("div");
     dayEl.className = "day";
-
+    dayEl.setAttribute('tabindex', '0');
+    dayEl.setAttribute('aria-label', `Día ${d} de ${monthNames[month]}`);
     const dateStr = dateKey(year, month + 1, d);
-    dayEl.dataset.date = dateStr; // referencia directa
+    dayEl.dataset.date = dateStr;
 
-    // número + contenedor de chips
     const num = document.createElement("span");
     num.className = "num";
     num.textContent = d;
@@ -92,16 +124,11 @@ function renderMonth(year, month) {
     chips.className = "chips";
     dayEl.appendChild(chips);
 
-    // click para abrir modal
-    dayEl.addEventListener("click", (ev) => {
-      // evitar que el click en elementos internos haga bubbling raro
-      openModal(dateStr);
-    });
-
+    dayEl.addEventListener("click", (ev) => openModal(dateStr));
+    dayEl.addEventListener("keydown", (e) => { if (e.key === 'Enter') openModal(dateStr); });
     daysGrid.appendChild(dayEl);
   }
 
-  // Huecos finales hasta completar la última fila de 7
   const totalCells = offset + totalDays;
   const remainder = totalCells % 7;
   if (remainder !== 0) {
@@ -116,9 +143,13 @@ function renderMonth(year, month) {
   return monthEl;
 }
 
-/* -------------------------
-   MODAL / RECORDATORIOS
-   ------------------------- */
+// Vista mensual detallada
+function expandMonthView(year, month) {
+  const monthEl = document.getElementById(`m${month + 1}`);
+  if (monthEl) monthEl.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Modal / Recordatorios
 function openModal(dateStr) {
   selectedDate = dateStr;
   const [y, m, d] = dateStr.split("-").map(Number);
@@ -129,8 +160,8 @@ function openModal(dateStr) {
 
   selectedDateText.textContent = `Fecha: ${display}`;
   modal.classList.add("open");
+  modal.setAttribute('aria-hidden', 'false');
   loadRemindersList();
-  // focus en el título para mejor UX
   const titleInput = document.getElementById("remTitle");
   if (titleInput) titleInput.focus();
 }
@@ -139,6 +170,7 @@ function closeModal() {
   const modal = document.getElementById("reminderModal");
   if (!modal) return;
   modal.classList.remove("open");
+  modal.setAttribute('aria-hidden', 'true');
   selectedDate = null;
 }
 
@@ -158,16 +190,18 @@ function loadRemindersList() {
 
   list.forEach((r, idx) => {
     const li = document.createElement("li");
+    li.setAttribute('role', 'listitem');
     li.innerHTML = `
       <div class="info">
         <i class="${r.icon || "fa-solid fa-bell"}"></i>
         <div>
           <div><strong>${escapeHtml(r.title)}</strong> ${r.time ? `<span class="meta">• ${escapeHtml(r.time)}</span>` : ""}</div>
           ${r.notes ? `<div class="meta">${escapeHtml(r.notes)}</div>` : ""}
+          ${r.recurrent ? `<div class="meta">Repite semanalmente</div>` : ""}
         </div>
       </div>
       <div>
-        <button data-idx="${idx}" type="button" class="del-btn">Eliminar</button>
+        <button data-idx="${idx}" type="button" class="del-btn" aria-label="Eliminar recordatorio">Eliminar</button>
       </div>
     `;
     listEl.appendChild(li);
@@ -179,21 +213,35 @@ function saveReminder(event) {
   if (!selectedDate) return;
 
   const title = document.getElementById("remTitle").value.trim();
-  if (!title) return; // título obligatorio
   const time = document.getElementById("remTime").value || "";
   const icon = document.getElementById("remIcon").value || "fa-solid fa-bell";
+  const recurrent = document.getElementById("remRecurrent").checked;
   const notes = document.getElementById("remNotes").value.trim() || "";
 
-  const item = { title, time, icon, notes, createdAt: Date.now() };
+  if (!title) {
+    document.getElementById("titleError").style.display = "block";
+    return;
+  } else {
+    document.getElementById("titleError").style.display = "none";
+  }
+
+  const item = { title, time, icon, notes, recurrent, createdAt: Date.now() };
   if (!reminders[selectedDate]) reminders[selectedDate] = [];
   reminders[selectedDate].push(item);
   localStorage.setItem(LS_KEY, JSON.stringify(reminders));
 
-  // refrescar lista y calendario
   loadRemindersList();
   renderYear(currentYear);
-  // limpiar form (no cerramos modal para que puedas añadir más)
   document.getElementById("reminderForm").reset();
+
+  // Notificación si es hora actual
+  if (time) {
+    const now = new Date();
+    const [h, m] = time.split(':');
+    if (now.getHours() === parseInt(h) && now.getMinutes() === parseInt(m)) {
+      showNotification("Recordatorio", `Es hora de: ${title}`);
+    }
+  }
 }
 
 function deleteReminderByIndex(date, idx) {
@@ -205,30 +253,27 @@ function deleteReminderByIndex(date, idx) {
   renderYear(currentYear);
 }
 
-/* -------------------------
-   ACTUALIZAR CHIPS / INDICADORES
-   ------------------------- */
+// Actualizar chips / indicadores
 function highlightReminders() {
-  // limpiar chips existentes
   document.querySelectorAll(".day").forEach(el => {
     el.classList.remove("has-reminders");
     const chips = el.querySelector(".chips");
     if (chips) chips.innerHTML = "";
   });
 
-  // por cada fecha guardada, buscar el elemento .day[data-date="..."]
   for (const date in reminders) {
     const el = document.querySelector(`.day[data-date="${date}"]`);
-    if (!el) continue; // pertenece a otro año/render distinto
+    if (!el) continue;
     const list = reminders[date] || [];
     if (list.length === 0) continue;
 
     el.classList.add("has-reminders");
     const chips = el.querySelector(".chips");
-    chips.innerHTML = ""; // limpiar
+    chips.innerHTML = "";
     list.slice(0, 2).forEach(r => {
       const chip = document.createElement("div");
       chip.className = "chip";
+      chip.title = escapeHtml(r.title) + (r.time ? ` - ${r.time}` : "");
       chip.innerHTML = `<i class="${r.icon || "fa-solid fa-bell"}"></i> ${escapeHtml(r.title)}`;
       chips.appendChild(chip);
     });
@@ -241,23 +286,71 @@ function highlightReminders() {
   }
 }
 
-/* -------------------------
-   EVENTOS Y UI (inicialización)
-   ------------------------- */
+// Búsqueda y filtros
+function applySearchFilter() {
+  const query = searchFilter.toLowerCase();
+  document.querySelectorAll(".day.has-reminders").forEach(day => {
+    const chips = day.querySelectorAll(".chip");
+    let visible = false;
+    chips.forEach(chip => {
+      if (chip.textContent.toLowerCase().includes(query)) visible = true;
+    });
+    day.style.display = visible || query === "" ? "block" : "none";
+  });
+}
+
+// Exportar/Importar
+function exportReminders() {
+  const dataStr = JSON.stringify(reminders, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'reminders.json';
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function importReminders(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const imported = JSON.parse(e.target.result);
+      reminders = { ...reminders, ...imported };
+      localStorage.setItem(LS_KEY, JSON.stringify(reminders));
+      renderYear(currentYear);
+      alert("Recordatorios importados exitosamente.");
+    } catch (err) {
+      alert("Error al importar: archivo inválido.");
+    }
+  };
+  reader.readAsText(file);
+}
+
+// Eventos y inicialización
 document.addEventListener("DOMContentLoaded", () => {
-  // elementos
   const sidebar = document.getElementById("sidebar");
   const toggleBtn = document.getElementById("toggleSidebar");
+  const themeToggle = document.getElementById("themeToggle");
   const prev = document.getElementById("prevYear");
   const next = document.getElementById("nextYear");
   const goToday = document.getElementById("goToday");
+  const searchInput = document.getElementById("searchInput");
   const modal = document.getElementById("reminderModal");
   const closeBtn = document.getElementById("closeModal");
   const form = document.getElementById("reminderForm");
+  const exportBtn = document.getElementById("exportBtn");
+  const importBtn = document.getElementById("importBtn");
   const remindersListEl = document.getElementById("remindersList");
+
+  // Aplicar tema inicial
+  document.body.classList.toggle('dark-mode', isDarkMode);
 
   // Render inicial
   renderYear(currentYear);
+  requestNotificationPermission();
 
   // Controles año
   if (prev) prev.addEventListener("click", () => { currentYear--; renderYear(currentYear); });
@@ -265,28 +358,38 @@ document.addEventListener("DOMContentLoaded", () => {
   if (goToday) goToday.addEventListener("click", () => {
     currentYear = new Date().getFullYear();
     renderYear(currentYear);
-    // scroll al mes actual si existe
     const m = new Date().getMonth() + 1;
     const anchor = document.getElementById(`m${m}`);
     if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  // Búsqueda
+  if (searchInput) {
+    searchInput.addEventListener("input", throttle((e) => {
+      searchFilter = e.target.value;
+      applySearchFilter();
+    }, 300));
+  }
 
   // Modal open/close
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
   if (modal) modal.addEventListener("click", (e) => {
     if (e.target === modal) closeModal();
   });
-  // ESC cierra modal
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (modal && modal.classList.contains("open")) closeModal();
     }
   });
 
-  // Form submit -> guardar
+  // Form submit
   if (form) form.addEventListener("submit", saveReminder);
 
-  // Delegación para eliminar (botones creados dinámicamente)
+  // Exportar/Importar
+  if (exportBtn) exportBtn.addEventListener("click", exportReminders);
+  if (importBtn) importBtn.addEventListener("change", importReminders);
+
+  // Delegación para eliminar
   if (remindersListEl) {
     remindersListEl.addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-idx]");
@@ -294,57 +397,38 @@ document.addEventListener("DOMContentLoaded", () => {
         const idx = parseInt(btn.dataset.idx, 10);
         if (!Number.isNaN(idx) && selectedDate) deleteReminderByIndex(selectedDate, idx);
       }
-      // botón con clase .del-btn
-      const delBtn = e.target.closest(".del-btn");
-      if (delBtn && delBtn.dataset.idx !== undefined && selectedDate) {
-        const idx2 = parseInt(delBtn.dataset.idx, 10);
-        if (!Number.isNaN(idx2)) deleteReminderByIndex(selectedDate, idx2);
-      }
     });
   }
 
-  // Sidebar: comportamiento solicitado
-  // - Clic dentro de sidebar => expandir (quitar 'collapsed')
-  // - Clic fuera => colapsar (añadir 'collapsed')
-  // - El botón #toggleSidebar sigue funcionando como toggle y evita propagación
+  // Sidebar y tema
   if (toggleBtn) {
     toggleBtn.addEventListener("click", (e) => {
-      e.stopPropagation(); // evitar que el document click lo vea como "fuera"
+      e.stopPropagation();
       sidebar.classList.toggle("collapsed");
     });
   }
+  if (themeToggle) {
+    themeToggle.addEventListener("click", toggleTheme);
+  }
 
-  // Clic en documento: si no es dentro de la sidebar, colapsar; si dentro, expandir.
   document.addEventListener("click", (e) => {
     const target = e.target;
     if (!sidebar) return;
     if (sidebar.contains(target)) {
-      // Si hago click dentro de la sidebar, me aseguro que esté expandida
       sidebar.classList.remove("collapsed");
     } else {
-      // Cualquier click fuera -> colapsar
       sidebar.classList.add("collapsed");
     }
   });
 
-  // Evitar que clicks en botones del calendario (p. ej. year controls) "expandan" la sidebar
-  // (no estrictamente necesario, pero previene parpadeos si usas botones en la misma área)
-  const uiButtons = document.querySelectorAll(".ghost-btn, .pill-btn, #prevYear, #nextYear, #goToday");
-  uiButtons.forEach(b => b.addEventListener("click", (e) => {
-    // no stopPropagation: permitimos que el document listener colapse si el click fue fuera
-    // pero evitar efectos raros: si quieres que esos botones no colapsen, puedes stopPropagation aquí.
-  }));
+  // Validación en tiempo real
+  const titleInput = document.getElementById("remTitle");
+  if (titleInput) {
+    titleInput.addEventListener("input", () => {
+      if (titleInput.value.trim()) {
+        document.getElementById("titleError").style.display = "none";
+        titleInput.classList.remove("error");
+      }
+    });
+  }
 });
-
-/* -------------------------
-   UTIL: escapeHtml (para evitar inyección de HTML por entrada del usuario)
-   ------------------------- */
-function escapeHtml(str) {
-  if (!str && str !== "") return "";
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
