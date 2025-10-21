@@ -78,4 +78,17 @@
           if (ans) {
             ans.hidden = true;
             ans.classList.remove('open');
-          }
+            }
+        }
+      };
+
+      q.addEventListener('click', toggle);
+      q.addEventListener('keydown', (e) => {
+        if (isEnterOrSpace(e)) {
+          toggle();
+          e.preventDefault();
+        }
+      });
+    });
+  }
+})();
