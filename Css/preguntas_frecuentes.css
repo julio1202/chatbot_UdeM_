@@ -1,0 +1,19 @@
+/* ...todo tu CSS previo... */
+
+/* FAQ answer con animación */
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.faq-answer.open {
+  max-height: 500px; /* suficiente para el contenido */
+  opacity: 1;
+}
+
+/* Mejor foco accesible */
+.faq-question:focus-visible {
+  outline: 3px solid rgba(79,70,229,0.4);
+  border-radius: 6px;
+}
