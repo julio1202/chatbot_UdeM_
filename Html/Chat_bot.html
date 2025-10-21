@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UdeM Bot - Chat Universitario</title>
 
-  <!-- ✅ Corrige las rutas relativas -->
-  <link rel="stylesheet" href="/css/chat_bot.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/chat_bot.css">
 
-  <!-- Iconos de FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
-
 <body>
   <div class="container">
-    <!-- Sidebar principal -->
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="logo">
-        <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo" />
+        <img src="/imagenes/zorro.png" alt="Logo Bot" class="bot-logo" />
         <span class="logo-text">UdeM Bot</span>
       </div>
 
@@ -31,43 +30,40 @@
         <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
         <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
       </nav>
+
+      <div class="settings">
+        <a href="#"><i class="fa-solid fa-user"></i></a>
+        <a href="#"><i class="fa-solid fa-gear"></i></a>
+      </div>
     </aside>
 
     <!-- Contenido principal -->
     <main class="content">
-      <section class="chat" role="region" aria-label="Chat UdeM Bot">
-        <!-- Cabecera -->
+      <section class="chat-panel">
         <header class="chat-header">
-          <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo" />
+          <img src="/imagenes/zorro.png" alt="Avatar Bot" width="40" height="40">
           <div>
             <div class="title">UdeM Bot</div>
             <div class="subtitle">Asistente virtual universitario</div>
           </div>
         </header>
 
-        <!-- Área de mensajes -->
-        <div class="chat-messages" id="chatMessages" aria-live="polite">
+        <div class="chat-messages" id="chatMessages">
           <div class="message bot">
-            <div class="avatar" aria-hidden="true">🤖</div>
-            <div>
-              <div class="bubble">¡Hola! Soy UdeM Bot. Puedo ayudarte con notas, horarios y recordatorios.</div>
-              <div class="timestamp">09:00</div>
-            </div>
+            <div class="avatar">🤖</div>
+            <div class="bubble">¡Hola! Soy <strong>UdeM Bot</strong>. Puedo ayudarte con tus notas, horarios y recordatorios.</div>
           </div>
         </div>
 
-        <!-- Área de entrada -->
         <form class="input-area" id="chatForm">
-          <textarea id="chatTextarea" placeholder="Escribe un mensaje..." rows="1" aria-label="Escribe un mensaje"></textarea>
-          <button type="submit" class="send-btn" aria-label="Enviar mensaje">
-            <i class="fa-solid fa-paper-plane"></i>
-          </button>
+          <textarea id="userInput" placeholder="Escribe un mensaje..." rows="1"></textarea>
+          <button type="submit" class="send-btn" aria-label="Enviar"><i class="fa-solid fa-paper-plane"></i></button>
         </form>
       </section>
     </main>
   </div>
 
-  <!-- Enlace al script -->
+  <!-- JS -->
   <script src="/js/chat_bot.js"></script>
 </body>
 </html>
