@@ -1,26 +1,95 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asesor Humano</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asesor Humano Universitario</title>
+  <script src="https://kit.fontawesome.com/a2e0e9b6c7.js" crossorigin="anonymous"></script>
+  <!-- CSS único -->
+  <link rel="stylesheet" href="/css/asesor_humano.css">
+
+  <!-- Iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
+
+  <!-- Sidebar principal -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+      <span class="logo-text">UdeM Bot</span>
+    </div>
+
+    <nav class="menu">
+      <a href="menu_principal.html"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
+      <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
+      <a href="notas_rendimiento.html"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
+      <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
+      <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
+      <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
+      <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
+      <a href="asesor_humano.html" class="active"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
+    </nav>
+
+    <div class="settings">
+      <a href="#" id="theme-toggle" aria-label="Cambiar tema"><i class="fa-solid fa-moon"></i></a>
+      <a href="#" id="collapse-btn" aria-label="Colapsar sidebar"><i class="fa-solid fa-bars"></i></a>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
     <header>
-        <h1>Asesor Humano</h1>
+      <h1>Asesor Humano Universitario</h1>
+      <p>Conecta con un asesor real cuando el chatbot no puede resolver tu duda.</p>
     </header>
-    <main>
-        <section id="chat">
-            <div id="messages"></div>
-            <input type="text" id="userInput" placeholder="Escribe tu mensaje...">
-            <button id="sendButton">Enviar</button>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 Asesor Humano. Todos los derechos reservados.</p>
-    </footer>
-    <script src="script.js"></script>
+
+    <!-- Resumen del caso -->
+    <section>
+      <h2>Resumen de tu consulta</h2>
+      <p><strong>Tu pregunta:</strong> ¿Cómo puedo solicitar revisión de nota?</p>
+      <p><strong>Respuesta del chatbot:</strong> Lo siento, no encontré información sobre eso.</p>
+      <p><strong>Estado:</strong> En espera de atención humana</p>
+      <p><strong>Fecha:</strong> 22 de octubre de 2025 - 10:30 a.m.</p>
+    </section>
+
+    <!-- Zona de conversación -->
+    <section>
+      <h2>Chat con el Asesor</h2>
+
+      <div>
+        <p><strong>Estudiante:</strong> Hola, necesito ayuda con la revisión de mi nota.</p>
+        <p><strong>Asesor Laura:</strong> Hola, soy Laura, asesora académica. Con gusto te ayudo. ¿Podrías indicarme la asignatura y el docente?</p>
+      </div>
+
+      <form>
+        <label for="mensaje">Escribe tu mensaje:</label><br>
+        <input type="text" id="mensaje" name="mensaje" placeholder="Escribe aquí tu mensaje..." size="60">
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+
+    <!-- Opciones rápidas -->
+    <section>
+      <h2>Opciones rápidas</h2>
+      <ul>
+        <li><a href="#">📞 Llamar a un asesor</a></li>
+        <li><a href="#">💬 Abrir videollamada</a></li>
+        <li><a href="#">📧 Enviar correo de seguimiento</a></li>
+        <li><a href="#">📋 Crear ticket de soporte</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Universidad de Medellín — Atención Humana Universitaria</p>
+    <p>Horario: Lunes a Viernes, 8:00 a.m. a 5:00 p.m. | Política de privacidad</p>
+  </footer>
+    <script src="/js/asesor_humano.js"></script>
+
+
+
 </body>
 </html>
