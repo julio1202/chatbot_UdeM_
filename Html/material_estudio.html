@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Material de estudio - UdeM Bot</title>
+
+  <!-- Íconos de Font Awesome -->
+  <script src="https://kit.fontawesome.com/a2d9d5e64a.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Archivo CSS principal -->
+  <link rel="stylesheet" href="/css/material_estudio.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Sidebar principal -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+        <span class="logo-text">UdeM Bot</span>
+      </div>
+
+      <nav class="menu">
+        <a href="menu_principal.html"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
+        <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
+        <a href="notas_rendimiento.html"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
+        <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
+        <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
+        <a href="material_estudio.html" class="active"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
+        <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
+        <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
+      </nav>
+
+      <div class="settings">
+        <a href="#" id="theme-toggle" aria-label="Cambiar tema"><i class="fa-solid fa-moon"></i></a>
+        <a href="#" id="collapse-btn" aria-label="Colapsar sidebar"><i class="fa-solid fa-bars"></i></a>
+      </div>
+    </aside>
+
+    <!-- Subsidebar de Materias -->
+    <aside class="subsidebar">
+      <h2>Materias</h2>
+      <ul>
+        <li><a href="#software">Fundamentos de software</a></li>
+        <li><a href="#datos">Modelos de datos</a></li>
+        <li><a href="#fisica">Física II</a></li>
+        <li><a href="#calculo">Cálculo de Varias Variables</a></li>
+        <li><a href="#legislacion">Legislación</a></li>
+      </ul>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="content">
+      <h1>Material de Estudio Universitario</h1>
+      <p>Bienvenido a la sección de recursos académicos de <strong>UdeM Bot</strong>. Aquí encontrarás material de apoyo, apuntes y ejercicios para tus materias.</p>
+
+      <section id="software">
+        <h2>📘 Fundamentos de Software</h2>
+        <ul>
+          <li>Conceptos básicos de sistemas y software</li>
+          <li>Ciclo de vida del software</li>
+          <li>Diagramas UML</li>
+          <li>Control de versiones</li>
+        </ul>
+        <p>Material disponible: apuntes, guías, ejercicios PDF, videos explicativos.</p>
+      </section>
+
+      <section id="datos">
+        <h2>💾 Modelos de Datos</h2>
+        <ul>
+          <li>Modelo Entidad-Relación</li>
+          <li>Normalización</li>
+          <li>Consultas SQL</li>
+          <li>Diseño lógico y físico de bases de datos</li>
+        </ul>
+        <p>Material disponible: diagramas ER, ejercicios SQL, prácticas de modelado.</p>
+      </section>
+
+      <section id="fisica">
+        <h2>⚡ Física II</h2>
+        <ul>
+          <li>Electricidad y magnetismo</li>
+          <li>Ondas electromagnéticas</li>
+          <li>Óptica y fenómenos de la luz</li>
+        </ul>
+        <p>Material disponible: guías de laboratorio, simuladores, apuntes teóricos.</p>
+      </section>
+
+      <section id="calculo">
+        <h2>📐 Cálculo de Varias Variables</h2>
+        <ul>
+          <li>Funciones de varias variables</li>
+          <li>Diferenciación parcial</li>
+          <li>Integrales múltiples</li>
+          <li>Campos vectoriales</li>
+        </ul>
+        <p>Material disponible: ejercicios resueltos, gráficas 3D, hojas de fórmulas.</p>
+      </section>
+
+      <section id="legislacion">
+        <h2>⚖️ Legislación</h2>
+        <ul>
+          <li>Conceptos básicos de derecho</li>
+          <li>Normatividad universitaria y laboral</li>
+          <li>Ética profesional</li>
+        </ul>
+        <p>Material disponible: artículos de ley, resúmenes, estudios de caso.</p>
+      </section>
+    </main>
+
+  </div>
+
+  <!-- Archivo JS principal -->
+  <script src="/js/material_estudio.js" defer></script>
+
+</body>
+</html>
