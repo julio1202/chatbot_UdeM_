@@ -4,84 +4,79 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Preguntas frecuentes</title>
-  <link rel="stylesheet" href="preguntas_frecuentes.css">
+  <link rel="stylesheet" href="/css/preguntas_frecuentes.css" />
   <!-- Librería de íconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="logo">
-      <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
-      <span class="logo-text">UdeM Bot</span>
-    </div>
-
-    <nav class="menu">
-      <a href="menu_principal.html" class="active"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
-      <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
-      <a href="notas_rendimiento.html"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
-      <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
-      <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
-      <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
-      <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
-      <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
-    </nav>
-
-    <div class="settings">
-      <a href="#"><i class="fa-solid fa-user"></i></a>
-      <a href="#"><i class="fa-solid fa-gear"></i></a>
-    </div>
-  </aside>
-
-  <header class="site-header">
-    <div class="brand">Mi Sitio</div>
-    <button id="menu-toggle" class="menu-toggle" aria-controls="main-menu" aria-expanded="false" aria-label="Abrir menú">
-      ☰
-    </button>
-    <nav id="main-menu" class="main-menu" aria-hidden="true">
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Servicios</a></li>
-        <li><a href="#">Preguntas frecuentes</a></li>
-        <li><a href="#">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main class="container">
-    <h1>Preguntas frecuentes</h1>
-
-    <section class="faq" aria-label="Preguntas frecuentes">
-      <div class="faq-item">
-        <button id="faq-q1" class="faq-question" aria-expanded="false" aria-controls="faq-a1">¿Cómo puedo crear una cuenta?</button>
-        <div id="faq-a1" class="faq-answer" role="region" aria-labelledby="faq-q1" hidden>
-          Crea tu cuenta haciendo clic en "Registrarse" y completa el formulario con tus datos. Recibirás un correo de confirmación.
-        </div>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+        <span class="logo-text">UdeM Bot</span>
       </div>
 
-      <div class="faq-item">
-        <button id="faq-q2" class="faq-question" aria-expanded="false" aria-controls="faq-a2">¿Cuál es el horario de atención?</button>
-        <div id="faq-a2" class="faq-answer" role="region" aria-labelledby="faq-q2" hidden>
-          Nuestro horario es de lunes a viernes de 9:00 a 18:00. También puedes dejar un mensaje fuera de horario.
-        </div>
-      </div>
+      <nav class="menu">
+        <a href="menu_principal.html"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
+        <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
+        <a href="notas_rendimiento.html"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
+        <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
+        <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
+        <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
+        <a href="preguntas_frecuentes.html" class="active"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
+        <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
+      </nav>
 
-      <div class="faq-item">
-        <button id="faq-q3" class="faq-question" aria-expanded="false" aria-controls="faq-a3">¿Puedo cambiar mi suscripción?</button>
-        <div id="faq-a3" class="faq-answer" role="region" aria-labelledby="faq-q3" hidden>
-          Sí, desde tu panel de usuario puedes cambiar la suscripción en la sección "Cuenta" → "Suscripción".
-        </div>
+      <div class="settings">
+        <a href="#" aria-label="Cambiar tema"><i class="fa-solid fa-moon"></i></a>
+        <a href="#" id="collapse-btn" aria-label="Colapsar sidebar"><i class="fa-solid fa-bars"></i></a>
       </div>
+    </aside>
 
-      <div class="faq-item">
-        <button id="faq-q4" class="faq-question" aria-expanded="false" aria-controls="faq-a4">¿Cómo contacto soporte?</button>
-        <div id="faq-a4" class="faq-answer" role="region" aria-labelledby="faq-q4" hidden>
-          Envía un correo a soporte@ejemplo.com o usa el formulario de contacto; respondemos en 24-48 horas.
+    <!-- Contenido principal -->
+    <main class="content">
+      <h1>Preguntas frecuentes</h1>
+      <section class="faq" aria-label="Preguntas frecuentes">
+        <div class="faq-item">
+          <button id="faq-q1" class="faq-question" aria-expanded="false" aria-controls="faq-a1">
+            ¿Cómo puedo crear una cuenta?
+          </button>
+          <div id="faq-a1" class="faq-answer" role="region" aria-labelledby="faq-q1" hidden>
+            Crea tu cuenta haciendo clic en "Registrarse" y completa el formulario con tus datos. Recibirás un correo de confirmación.
+          </div>
         </div>
-      </div>
-    </section>
-  </main>
 
-  <script src="preguntas_frecuentes.js" defer></script>
+        <div class="faq-item">
+          <button id="faq-q2" class="faq-question" aria-expanded="false" aria-controls="faq-a2">
+            ¿Cuál es el horario de atención?
+          </button>
+          <div id="faq-a2" class="faq-answer" role="region" aria-labelledby="faq-q2" hidden>
+            Nuestro horario es de lunes a viernes de 9:00 a 18:00. También puedes dejar un mensaje fuera de horario.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button id="faq-q3" class="faq-question" aria-expanded="false" aria-controls="faq-a3">
+            ¿Puedo cambiar mi suscripción?
+          </button>
+          <div id="faq-a3" class="faq-answer" role="region" aria-labelledby="faq-q3" hidden>
+            Sí, desde tu panel de usuario puedes cambiar la suscripción en la sección "Cuenta" → "Suscripción".
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button id="faq-q4" class="faq-question" aria-expanded="false" aria-controls="faq-a4">
+            ¿Cómo contacto soporte?
+          </button>
+          <div id="faq-a4" class="faq-answer" role="region" aria-labelledby="faq-q4" hidden>
+            Envía un correo a soporte@ejemplo.com o usa el formulario de contacto; respondemos en 24-48 horas.
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/preguntas_frecuentes.js" defer></script>
 </body>
 </html>

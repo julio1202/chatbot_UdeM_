@@ -1,19 +1,268 @@
-/* ...todo tu CSS previo... */
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-/* FAQ answer con animación */
+body, html {
+  height: 100%;
+}
+
+:root {
+  --udem-red: #b32025;
+  --bg-body: #fafafa;
+  --bg-sidebar: #fff;
+  --bg-content: #fff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --hover-bg: #f5f5f5;
+  --active-bg: #f9f9f9;
+  --transition: all 0.3s ease;
+}
+
+body.dark-mode {
+  --bg-body: #222;
+  --bg-sidebar: #333;
+  --bg-content: #444;
+  --text-color: #eee;
+  --border-color: #555;
+  --hover-bg: #444;
+  --active-bg: #555;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  background: var(--bg-body);
+  color: var(--text-color);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width var(--transition);
+  will-change: width;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .menu span {
+  display: none;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 20px;
+  color: var(--udem-red);
+}
+
+.bot-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* Menú */
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: var(--text-color);
+  border-radius: 6px;
+  transition: background var(--transition), transform 0.2s;
+  will-change: background, transform;
+}
+
+.menu a:hover {
+  background: var(--hover-bg);
+  transform: scale(1.02);
+}
+
+.menu a.active {
+  background: var(--active-bg);
+  border-left: 3px solid var(--udem-red);
+  color: var(--udem-red);
+  font-weight: bold;
+}
+
+.menu a:focus-visible {
+  outline: 2px solid var(--udem-red);
+  outline-offset: 2px;
+}
+
+/* Íconos */
+.menu i {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+/* Settings */
+.settings {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.settings a {
+  color: #444;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.settings a:hover {
+  color: var(--udem-red);
+}
+
+.settings a:focus-visible {
+  outline: 2px solid var(--udem-red);
+}
+
+/* Contenido */
+.content {
+  flex: 1;
+  padding: 40px;
+  background: var(--bg-content);
+  overflow-y: auto;
+}
+
+/* FAQ */
+.faq {
+  margin-top: 20px;
+}
+
+.faq-item {
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  padding: 15px;
+  background: var(--bg-content);
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background var(--transition), transform 0.2s;
+  will-change: background, transform;
+}
+
+.faq-question:hover {
+  background: var(--hover-bg);
+  transform: scale(1.01);
+}
+
+.faq-question:focus-visible {
+  outline: 3px solid rgba(179,32,37,0.4);
+  border-radius: 6px;
+}
+
+/* Animación para respuestas */
 .faq-answer {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
   transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-.faq-answer.open {
-  max-height: 500px; /* suficiente para el contenido */
-  opacity: 1;
+  background: var(--bg-content);
+  padding: 0 15px;
+  will-change: max-height, opacity;
 }
 
-/* Mejor foco accesible */
-.faq-question:focus-visible {
-  outline: 3px solid rgba(79,70,229,0.4);
-  border-radius: 6px;
+.faq-answer.open {
+  max-height: 200px;
+  opacity: 1;
+  padding: 15px;
+}
+
+/* Spinner para feedback (opcional, si agregas JS para carga) */
+.spinner {
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--udem-red);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+  display: none;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .sidebar.collapsed {
+    width: 0;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .faq-question {
+    padding: 12px;
+  }
+
+  .faq-answer.open {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .menu {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .menu a {
+    flex-shrink: 0;
+  }
+
+  .content {
+    padding: 15px;
+  }
 }
