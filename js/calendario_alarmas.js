@@ -115,6 +115,12 @@ function renderMonth(year, month) {
     const dateStr = dateKey(year, month + 1, d);
     dayEl.dataset.date = dateStr;
 
+    // Marcar día de hoy
+    const today = new Date();
+    if (year === today.getFullYear() && month === today.getMonth() && d === today.getDate()) {
+      dayEl.classList.add("today");
+    }
+
     const num = document.createElement("span");
     num.className = "num";
     num.textContent = d;
@@ -358,9 +364,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (goToday) goToday.addEventListener("click", () => {
     currentYear = new Date().getFullYear();
     renderYear(currentYear);
-    const m = new Date().getMonth() + 1;
-    const anchor = document.getElementById(`m${m}`);
-    if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+    const today = new Date();
+    const m = today.getMonth() + 1;
+    const d = today.getDate();
+    const todayEl = document.querySelector(`.day[data-date="${dateKey(currentYear, m, d)}"]`);
+    if (todayEl) {
+      todayEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    } else {
+      const anchor = document.getElementById(`m${m}`);
+      if (anchor) anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 
   // Búsqueda

@@ -1,61 +1,82 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("chatForm");
-  const input = document.getElementById("userInput");
-  const chat = document.getElementById("chatMessages");
+// chat_bot.js
+// Versión con roles, umbral de confianza y autoaprendizaje
 
-  function createMessage(text, sender = "bot") {
-    const msg = document.createElement("div");
-    msg.className = `message ${sender}`;
+const LS_CHAT_KEY = 'udem_chat_history';
+const LS_LEARNING_KEY = 'udem_learning_data';
+const LS_USER_ROLE = 'udem_user_role';
 
-    if (sender === "bot") {
-      msg.innerHTML = `<div class="avatar">🤖</div><div class="bubble">${text}</div>`;
-    } else {
-      msg.innerHTML = `<div class="bubble">${text}</div>`;
+let userRole = localStorage.getItem(LS_USER_ROLE) || 'student';
+let chatHistory = JSON.parse(localStorage.getItem(LS_CHAT_KEY) || '[]');
+let learningData = JSON.parse(localStorage.getItem(LS_LEARNING_KEY) || '{}');
+
+function getBotResponse(userMessage) {
+  // Simular confianza (en producción, usa IA real)
+  const confidence = Math.random() * 100;
+  document.getElementById('confidenceIndicator').textContent = `Confianza: ${confidence.toFixed(0)}%`;
+
+  // Buscar en datos de aprendizaje
+  for (const key in learningData) {
+    if (userMessage.toLowerCase().includes(key)) {
+      return learningData[key];
     }
-
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
   }
 
-  function showTyping() {
-    const typing = document.createElement("div");
-    typing.className = "message bot typing";
-    typing.innerHTML = `
-      <div class="avatar">🤖</div>
-      <div class="bubble">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-      </div>
-    `;
-    chat.appendChild(typing);
-    chat.scrollTop = chat.scrollHeight;
-    return typing;
+  // Respuestas básicas
+  if (userMessage.toLowerCase().includes('nota')) return 'Puedes ver tus notas en la sección Notas/Rendimiento.';
+  if (userMessage.toLowerCase().includes('horario')) return 'Revisa tu calendario en Calendario/Alarmas.';
+  if (confidence > 70) {
+    // Escalar a asesor
+    if (userRole === 'advisor') {
+      return 'Como asesor, puedo ayudarte directamente. ¿Qué necesitas?';
+    } else {
+      return 'Lo siento, no estoy seguro. Te conecto con un asesor humano.';
+    }
   }
+  return '¡Hola! ¿En qué más puedo ayudarte?';
+}
 
-  function botResponse(text) {
-    const t = text.toLowerCase();
-    if (t.includes("nota") || t.includes("promedio"))
-      return "Puedes calcular tu promedio en la sección <strong>Notas/Rendimiento</strong> 📊";
-    if (t.includes("calendario") || t.includes("alarma"))
-      return "Ve a <strong>Calendario/Alarmas</strong> para crear recordatorios ⏰";
-    if (t.includes("salud"))
-      return "En la sección <strong>Salud</strong> encontrarás recursos de bienestar ❤️";
-    if (t.includes("asesor"))
-      return "Puedo derivarte a un <strong>asesor humano</strong> si lo necesitas 👨‍🏫";
-    return `Estoy procesando tu mensaje: "${text}" 🤔`;
+function addMessage(sender, text) {
+  const messages = document.getElementById('chatMessages');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${sender}`;
+  messageDiv.innerHTML = `
+    <div class="avatar">${sender === 'bot' ? '🤖' : '👤'}</div>
+    <div class="bubble">${text}</div>
+  `;
+  messages.appendChild(messageDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function saveChat(userMessage, botResponse) {
+  chatHistory.push({ user: userMessage, bot: botResponse, timestamp: Date.now() });
+  localStorage.setItem(LS_CHAT_KEY, JSON.stringify(chatHistory));
+
+  // Autoaprendizaje: guardar respuestas útiles
+  if (botResponse.includes('puedes ver') || botResponse.includes('revisa')) {
+    learningData[userMessage.toLowerCase()] = botResponse;
+    localStorage.setItem(LS_LEARNING_KEY, JSON.stringify(learningData));
   }
+}
 
-  form.addEventListener("submit", (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('userInput');
+
+  // Cargar historial
+  chatHistory.forEach(msg => {
+    addMessage('user', msg.user);
+    addMessage('bot', msg.bot);
+  });
+
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const text = input.value.trim();
-    if (!text) return;
-    createMessage(text, "user");
-    input.value = "";
+    const userMessage = input.value.trim();
+    if (!userMessage) return;
 
-    const typing = showTyping();
-
-    setTimeout(() => {
-      typing.remove();
-      createMessage(botResponse(text), "bot");
-    }, 1200);
+    addMessage('user', userMessage);
+    const botResponse = getBotResponse(userMessage);
+    addMessage('bot', botResponse);
+    saveChat(userMessage, botResponse);
+    input.value = '';
   });
 });

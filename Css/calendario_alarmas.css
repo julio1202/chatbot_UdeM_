@@ -504,3 +504,12 @@ body.dark-mode {
     grid-template-columns: 1fr;
   }
 }
+
+/* ... (todo el CSS anterior permanece igual) ... */
+
+/* Agregar al final */
+.day.today {
+  background-color: #fff3cd;
+  border: 2px solid #ffeaa7;
+  font-weight: bold;
+}

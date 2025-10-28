@@ -4,11 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>UdeM Bot - Chat Universitario</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="/css/chat_bot.css">
-
-  <!-- Iconos -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
@@ -28,7 +24,6 @@
         <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
         <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
         <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
-        <a href="asesor_humano.html"><i class="fa-solid fa-user-tie"></i><span>Asesor humano</span></a>
       </nav>
 
       <div class="settings">
@@ -45,13 +40,14 @@
           <div>
             <div class="title">UdeM Bot</div>
             <div class="subtitle">Asistente virtual universitario</div>
+            <div id="confidenceIndicator">Confianza: 100%</div>
           </div>
         </header>
 
         <div class="chat-messages" id="chatMessages">
           <div class="message bot">
             <div class="avatar">🤖</div>
-            <div class="bubble">¡Hola! Soy <strong>UdeM Bot</strong>. Puedo ayudarte con tus notas, horarios y recordatorios.</div>
+            <div class="bubble">¡Hola! Soy UdeM Bot. ¿En qué puedo ayudarte?</div>
           </div>
         </div>
 

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-      <!-- Fondo (URL en HTML) -->
+  <!-- Fondo (URL en HTML) -->
   <img class="bg-image" src="https://udemedellin.edu.co/wp-content/uploads/2022/07/Campus-udemedellin.jpg" alt="Campus UdeM">
   <div class="bg-overlay"></div>
 
@@ -16,11 +16,9 @@
 
     <!-- Header -->
     <header class="bot-header">
-    <img src="/imagenes/zorro.png" 
-        alt="Logo Chat Bot" class="bot-logo">
-    <h2 class="bot-title">UdeM Bot</h2>
+      <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+      <h2 class="bot-title">UdeM Bot</h2>
     </header>
-
 
     <!-- Logo Universidad -->
     <div class="logo-container">
@@ -52,11 +50,44 @@
 
     <!-- Links ayuda -->
     <div class="help-links">
+      <a href="#" id="registerLink">¿No tienes cuenta? Regístrate</a><br>
       <a href="#">¿Olvidó su contraseña?</a><br>
       <a href="#">Ayuda</a>
     </div>
 
   </div>
+
+  <!-- Modal de Registro -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Registro en UdeM Bot</h2>
+      <form id="registerForm" class="login-form">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" name="nombre" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="passwordReg">Contraseña:</label>
+        <input type="password" id="passwordReg" name="passwordReg" required>
+
+        <label for="confirmPassword">Confirmar contraseña:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+        <label for="rol">Selecciona tu rol:</label>
+        <select id="rol" name="rol" required>
+          <option value="">-- Selecciona --</option>
+          <option value="student">Estudiante</option>
+          <option value="professor">Profesor</option>
+          <option value="advisor">Asesor de seguimiento</option>
+        </select>
+
+        <button type="submit" class="login-btn">Registrarse</button>
+      </form>
+    </div>
+  </div>
+
   <script src="/js/Registro.js"></script>
 </body>
 </html>
