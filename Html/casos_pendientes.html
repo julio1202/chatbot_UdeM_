@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casos Pendientes - UdeM Bot</title>
+  <script src="https://kit.fontawesome.com/a2e0e9b6c7.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/css/casos_pendientes.css"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+      <span class="logo-text">UdeM Bot</span>
+    </div>
+
+    <nav class="menu">
+      <a href="casos_pendientes.html" class="active"><i class="fa-solid fa-clock"></i><span>Casos Pendientes</span></a>
+      <a href="casos_resueltos.html"><i class="fa-solid fa-check-circle"></i><span>Casos Resueltos</span></a>
+      <a href="asesor_seguimiento.html"><i class="fa-solid fa-user-tie"></i><span>Panel Asesor</span></a>
+    </nav>
+
+    <div class="settings">
+      <a href="#" id="theme-toggle"><i class="fa-solid fa-moon"></i></a>
+      <a href="#" id="collapse-btn"><i class="fa-solid fa-bars"></i></a>
+    </div>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main class="main-content">
+    <header>
+      <h1>Casos Pendientes</h1>
+      <p>Conversaciones activas que requieren atención.</p>
+    </header>
+
+    <section>
+      <div id="pendingCasesList">
+        <!-- Casos se cargarán aquí -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Universidad de Medellín — Casos Pendientes</p>
+  </footer>
+
+  <script src="/js/casos_pendientes.js"></script>
+</body>
+</html>

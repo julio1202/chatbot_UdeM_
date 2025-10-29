@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asesor Humano Universitario</title>
+  <title>Espacio del Asesor - UdeM Bot</title>
   <script src="https://kit.fontawesome.com/a2e0e9b6c7.js" crossorigin="anonymous"></script>
   <!-- CSS único -->
   <link rel="stylesheet" href="/css/asesor_seguimiento.css">
@@ -21,14 +21,10 @@
     </div>
 
     <nav class="menu">
-      <a href="menu_principal.html"><i class="fa-solid fa-house"></i><span>Menú principal</span></a>
-      <a href="chat_bot.html"><i class="fa-solid fa-robot"></i><span>Chat bot</span></a>
-      <a href="notas_rendimiento.html"><i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span></a>
-      <a href="calendario_alarmas.html"><i class="fa-solid fa-calendar"></i><span>Calendario/Alarmas</span></a>
-      <a href="salud.html"><i class="fa-solid fa-heart-pulse"></i><span>Salud</span></a>
-      <a href="material_estudio.html"><i class="fa-solid fa-book"></i><span>Material de estudio</span></a>
-      <a href="preguntas_frecuentes.html"><i class="fa-solid fa-circle-question"></i><span>Preguntas frecuentes</span></a>
-    </nav>
+  <a href="casos_pendientes.html"><i class="fa-solid fa-clock"></i><span>Casos Pendientes</span></a>
+  <a href="casos_resueltos.html"><i class="fa-solid fa-check-circle"></i><span>Casos Resueltos</span></a>
+  <a href="asesor_seguimiento.html" class="active"><i class="fa-solid fa-user-tie"></i><span>Panel Asesor</span></a>
+</nav>
 
     <div class="settings">
       <a href="#" id="theme-toggle" aria-label="Cambiar tema"><i class="fa-solid fa-moon"></i></a>
@@ -39,56 +35,54 @@
   <!-- Contenido principal -->
   <main class="main-content">
     <header>
-      <h1>Asesor Humano Universitario</h1>
-      <p>Conecta con un asesor real cuando el chatbot no puede resolver tu duda.</p>
+      <h1>Seguimiento de Asesoría Humana</h1>
+      <p>Gestiona casos activos y revisa casos solucionados.</p>
     </header>
 
-    <!-- Resumen del caso -->
-    <section>
-      <h2>Resumen de tu consulta</h2>
-      <p><strong>Tu pregunta:</strong> ¿Cómo puedo solicitar revisión de nota?</p>
-      <p><strong>Respuesta del chatbot:</strong> Lo siento, no encontré información sobre eso.</p>
-      <p><strong>Estado:</strong> En espera de atención humana</p>
-      <p><strong>Fecha:</strong> 22 de octubre de 2025 - 10:30 a.m.</p>
-    </section>
+    <!-- Seguimiento de Caso (con ID para ancla) -->
+    <section id="seguimiento-casos">
+      <h2>Seguimiento de Caso</h2>
+      <p id="availabilityStatus">Disponibilidad: Cargando...</p>
+      <button id="toggleAvailability">Cambiar Disponibilidad</button>
 
-    <!-- Zona de conversación -->
-    <section>
-      <h2>Chat con el Asesor</h2>
-
-      <div>
-        <p><strong>Estudiante:</strong> Hola, necesito ayuda con la revisión de mi nota.</p>
-        <p><strong>Asesor Laura:</strong> Hola, soy Laura, asesora académica. Con gusto te ayudo. ¿Podrías indicarme la asignatura y el docente?</p>
+      <h3>Conversaciones Activas</h3>
+      <div id="activeConversationsList">
+        <!-- Aquí se cargarán las conversaciones activas dinámicamente -->
       </div>
 
-      <form>
-        <label for="mensaje">Escribe tu mensaje:</label><br>
-        <input type="text" id="mensaje" name="mensaje" placeholder="Escribe aquí tu mensaje..." size="60">
-        <button type="submit">Enviar</button>
+      <h3>Responder Mensaje</h3>
+      <form id="responseForm">
+        <input type="hidden" id="conversationId">
+        <label for="responseMessage">Escribe tu respuesta:</label>
+        <textarea id="responseMessage" placeholder="Escribe aquí tu mensaje..." required></textarea>
+        <button type="submit">Enviar Respuesta</button>
       </form>
+
+      <h3>Acciones</h3>
+      <button id="closeConversationBtn">Cerrar Conversación Seleccionada</button>
     </section>
 
-    <!-- Opciones rápidas -->
+    <!-- Casos Solucionados (con ID para ancla) -->
+    <section id="casos-resueltos">
+      <h2>Casos Solucionados</h2>
+      <div id="closedConversationsList">
+        <!-- Aquí se cargarán las conversaciones cerradas dinámicamente -->
+      </div>
+    </section>
+
+    <!-- Botón de logout -->
     <section>
-      <h2>Opciones rápidas</h2>
-      <ul>
-        <li><a href="#">📞 Llamar a un asesor</a></li>
-        <li><a href="#">💬 Abrir videollamada</a></li>
-        <li><a href="#">📧 Enviar correo de seguimiento</a></li>
-        <li><a href="#">📋 Crear ticket de soporte</a></li>
-      </ul>
+      <button id="logoutBtn">Cerrar Sesión</button>
     </section>
 
   </main>
 
   <!-- Pie de página -->
   <footer>
-    <p>Universidad de Medellín — Atención Humana Universitaria</p>
+    <p>Universidad de Medellín — Panel de Asesores</p>
     <p>Horario: Lunes a Viernes, 8:00 a.m. a 5:00 p.m. | Política de privacidad</p>
   </footer>
-    <script src="/js/asesor_seguimiento.js"></script>
 
-
-
+  <script src="/js/asesor_seguimiento.js"></script>
 </body>
 </html>

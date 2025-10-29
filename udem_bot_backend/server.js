@@ -1,5 +1,5 @@
 // ======================================================
-// 🎓 SERVER COMPLETO: UdeM Chatbot + PostgreSQL + OpenAI
+// 🎓 SERVER COMPLETO: UdeM Chatbot + PostgreSQL + Gemini
 // ======================================================
 
 const express = require('express');
@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
-const pool = require('./db');  // Importa el pool de db.js
+const pool = require('./db');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -80,16 +80,16 @@ async function hashPassword(password) {
 }
 
 // ======================================================
-// 🤖 INTEGRACIÓN CON OPENAI GPT-4o MINI
+// 🤖 INTEGRACIÓN CON GOOGLE GEMINI
 // ======================================================
-let openai;
-if (process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY.startsWith('sk-')) {
-  const OpenAI = require('openai');
-  openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-  console.log('🟢 OpenAI inicializado correctamente');
+let gemini;
+if (process.env.GEMINI_API_KEY) {
+  const { GoogleGenerativeAI } = require('@google/generative-ai');
+  gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  console.log('🟢 Gemini inicializado correctamente');
 } else {
-  console.warn('⚠️ OPENAI_API_KEY no encontrada o inválida. OpenAI no estará disponible.');
-  openai = null;
+  console.warn('⚠️ GEMINI_API_KEY no encontrada. Gemini no estará disponible.');
+  gemini = null;
 }
 
 // ======================================================
@@ -113,6 +113,7 @@ try {
   const advisorsAvailabilityRouter = require('./routes/advisors_availability');
   const messagesRouter = require('./routes/messages');
   const conversationsRouter = require('./routes/conversations');
+  const coursesRouter = require('./routes/courses');
 
   app.use('/api/users', usersRouter);
   app.use('/api/reminders', remindersRouter);
@@ -120,11 +121,25 @@ try {
   app.use('/api/advisors_availability', advisorsAvailabilityRouter);
   app.use('/api/conversations', conversationsRouter);
   app.use('/api/messages', messagesRouter);
+  app.use('/api/courses', coursesRouter);
 
   console.log('✅ Rutas cargadas correctamente');
 } catch (err) {
   console.error('❌ Error importando routers:', err);
 }
+
+// ======================================================
+// 🏢 RUTAS PARA LOS HTML DEL ASESOR
+// ======================================================
+app.get('/asesor_seguimiento', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'MultipleFiles', 'asesor_seguimiento.html'));
+});
+app.get('/casos_pendientes', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'MultipleFiles', 'casos_pendientes.html'));
+});
+app.get('/casos_resueltos', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'MultipleFiles', 'casos_resueltos.html'));
+});
 
 // ======================================================
 // 🚀 INICIAR SERVIDOR
@@ -135,4 +150,4 @@ app.listen(PORT, () => {
   console.error('❌ Error al iniciar servidor:', err);
 });
 
-module.exports = { openai };  // Exporta openai para routes
+module.exports = { gemini };  // Exporta gemini, NO openai

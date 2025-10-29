@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel del Profesor - UdeM</title>
+  <link rel="stylesheet" href="profesor.css" />
+</head>
+<body>
+  <header>
+    <h1>📘 Panel del Profesor - UdeM</h1>
+    <p>Gestión de notas y cursos</p>
+  </header>
+
+  <main>
+    <section class="notas">
+      <h2>📊 Notas de los Estudiantes</h2>
+
+      <div class="filtros">
+        <input type="text" id="buscarEstudiante" placeholder="Buscar por nombre o correo..." />
+        <button id="btnBuscar">Buscar</button>
+      </div>
+
+      <table id="tablaNotas">
+        <thead>
+          <tr>
+            <th>Estudiante</th>
+            <th>Materia</th>
+            <th>Item</th>
+            <th>Nota</th>
+            <th>%</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <button id="btnAgregarNota">➕ Agregar Nota</button>
+    </section>
+
+    <section class="cursos">
+      <h2>📚 Administración de Cursos</h2>
+
+      <div class="nuevoCurso">
+        <input type="text" id="nombreCurso" placeholder="Nombre del nuevo curso" />
+        <button id="btnAgregarCurso">Agregar Curso</button>
+      </div>
+
+      <ul id="listaCursos"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Universidad de Medellín - Sistema Académico © 2025</p>
+  </footer>
+
+  <script src="profesor.js"></script>
+</body>
+</html>

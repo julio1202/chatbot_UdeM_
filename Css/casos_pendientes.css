@@ -1,0 +1,232 @@
+/* ===========================
+   RESET BÁSICO Y VARIABLES
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+:root {
+  --udem-red: #b32025;
+  --bg-body: #fafafa;
+  --bg-sidebar: #fff;
+  --bg-content: #fff;
+  --text-color: #333;
+  --border-color: #ddd;
+  --hover-bg: #f5f5f5;
+  --transition: all 0.3s ease;
+}
+
+body.dark-mode {
+  --bg-body: #1e1e1e;
+  --bg-sidebar: #2c2c2c;
+  --bg-content: #333;
+  --text-color: #eee;
+  --border-color: #444;
+  --hover-bg: #3a3a3a;
+}
+
+/* ===========================
+   ESTRUCTURA GENERAL
+=========================== */
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-body);
+  color: var(--text-color);
+}
+
+/* ===========================
+   SIDEBAR PRINCIPAL
+=========================== */
+.sidebar {
+  width: 240px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width var(--transition);
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  color: var(--udem-red);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.bot-logo {
+  width: 32px;
+  height: 32px;
+}
+
+/* Menú lateral */
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: var(--text-color);
+  border-radius: 6px;
+  transition: background var(--transition), transform 0.2s;
+}
+
+.menu a:hover {
+  background: var(--hover-bg);
+  transform: scale(1.02);
+}
+
+.menu a.active {
+  background: var(--hover-bg);
+  border-left: 3px solid var(--udem-red);
+  color: var(--udem-red);
+  font-weight: bold;
+}
+
+.sidebar.collapsed .menu span,
+.sidebar.collapsed .logo-text {
+  display: none;
+}
+
+/* Settings */
+.settings {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.settings a {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  transition: color var(--transition);
+}
+
+.settings a:hover {
+  color: var(--udem-red);
+}
+
+/* ===========================
+   CONTENIDO PRINCIPAL
+=========================== */
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background: var(--bg-content);
+  overflow-y: auto;
+}
+
+.main-content header h1 {
+  color: var(--udem-red);
+  margin-bottom: 10px;
+}
+
+.main-content section {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+section h2 {
+  color: var(--udem-red);
+  margin-bottom: 15px;
+}
+
+/* Lista de casos pendientes */
+#pendingCasesList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.case {
+  background: var(--bg-sidebar);
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-left: 4px solid var(--udem-red);
+}
+
+.case h3 {
+  color: var(--udem-red);
+  margin-bottom: 10px;
+}
+
+.case p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.case button {
+  background: var(--udem-red);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background var(--transition);
+}
+
+.case button:hover {
+  background: #961c1f;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+footer {
+  width: 10%;
+  background: var(--bg-sidebar);
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+  padding: 15px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+/* ===========================
+   RESPONSIVIDAD
+=========================== */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .menu {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .menu a {
+    padding: 10px;
+    flex-shrink: 0;
+  }
+
+  .main-content {
+    padding: 20px;
+  }
+}

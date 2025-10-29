@@ -72,12 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Manejar login
+  // Manejar login con redirección basada en rol
   const loginForm = document.getElementById('loginForm');
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const usuario = document.getElementById('usuario').value.trim();
     const password = document.getElementById('password').value;
+
+    console.log('Enviando login:', { email: usuario, password });
 
     try {
       const response = await fetch('/api/login', {
@@ -86,20 +88,48 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ email: usuario, password })
       });
 
-      if (!response.ok) throw new Error('Login fallido.');
+      console.log('Status de respuesta:', response.status);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Error de respuesta:', errorText);
+        alert('Login fallido: ' + errorText);
+        return;
+      }
 
       const data = await response.json();
-      localStorage.setItem('udem_token', data.token || 'logged_in');
-      localStorage.setItem('udem_user_role', data.role || 'unknown');
-      window.location.href = 'menu_principal.html';
-    } catch (err) {
-      console.error('Error en login:', err);
-      const storedData = JSON.parse(localStorage.getItem('udem_user_data') || '{}');
-      if (storedData.email === usuario && password) {
-        window.location.href = 'menu_principal.html';
-      } else {
-        alert('Usuario o contraseña incorrectos.');
+      console.log('Respuesta completa:', data);
+
+      if (!data.role) {
+        console.error('No se recibió rol. Respuesta:', data);
+        alert('Error: No se pudo determinar el rol. Verifica con el administrador.');
+        return;
       }
+
+      localStorage.setItem('udem_token', data.token || 'logged_in');
+      localStorage.setItem('udem_user_role', data.role);
+
+      let redirectUrl;
+      switch (data.role) {
+        case 'student':
+          redirectUrl = 'menu_principal.html';
+          break;
+        case 'professor':
+          redirectUrl = 'notas_rendimiento.html';
+          break;
+        case 'advisor':
+          redirectUrl = 'asesor_seguimiento.html';
+          break;
+        default:
+          redirectUrl = 'menu_principal.html';
+      }
+
+      console.log('Redirigiendo a:', redirectUrl);
+      alert('Login exitoso. Redirigiendo a ' + redirectUrl);  // Temporal para confirmar
+      window.location.href = redirectUrl;
+    } catch (err) {
+      console.error('Error en fetch:', err);
+      alert('Error de conexión. Revisa la consola.');
     }
   });
 });
