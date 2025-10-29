@@ -1,23 +1,32 @@
 const express = require('express');
-const { getUsers, createUser } = require('../models/userModel');
-const router = express.Router();  // Crea un "enrutador" para estas rutas.
+const UserModel = require('../models/userModel');
+const router = express.Router();
 
-router.get('/', async (req, res) => {  // Ruta para obtener usuarios (GET /api/users).
+// Ruta POST para crear usuario
+router.post('/', async (req, res) => {
+  const { id, name, email, password, role } = req.body;
   try {
-    const users = await getUsers();
-    res.json(users);  // Envía los datos como JSON (formato fácil para JS).
+    const newUser = await UserModel.createUser(id, name, email, password, role);
+    res.json({ success: true, user: newUser });
   } catch (err) {
-    res.status(500).json({ error: err.message });  // Si hay error, envía mensaje.
+    console.error('Error creando usuario:', err);
+    res.status(500).json({ error: 'Error creando usuario' });
   }
 });
 
-router.post('/', async (req, res) => {  // Ruta para crear usuario (POST /api/users).
-  const { name, email, role } = req.body;  // Toma datos del "cuerpo" de la petición.
+// Ruta POST para login
+router.post('/login', async (req, res) => {
+  const { usuario, password } = req.body;
   try {
-    const user = await createUser(name, email, role);
-    res.json(user);
+    const user = await UserModel.findUserByEmail(usuario);
+    if (user && user.password === password) {
+      res.json({ success: true, message: 'Login exitoso', user });
+    } else {
+      res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error en login:', err);
+    res.status(500).json({ error: 'Error en el servidor' });
   }
 });
 

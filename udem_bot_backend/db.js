@@ -1,13 +1,21 @@
-const { Pool } = require('pg');  // Importa la librería para conectar a PostgreSQL.
+const { Pool } = require('pg');
+require('dotenv').config();  // Carga .env desde la raíz
 
-const pool = new Pool({           // Crea una "piscina" de conexiones (para eficiencia).
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
+const pool = new Pool({
   user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
-module.exports = pool;            // Exporta la conexión para usarla en otros archivos.
+pool.connect((err, client, release) => {
+  if (err) {
+    console.error('Error conectando a PostgreSQL:', err);
+    return;
+  }
+  console.log('Conectado a PostgreSQL exitosamente');
+  release();
+});
 
-
+module.exports = pool;
