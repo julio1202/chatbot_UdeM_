@@ -1,5 +1,5 @@
 const express = require('express');
-const AdvisorsAvailabilityModel = require('../models/advisorsAvailabilityModel');
+const AdvisorsAvailabilityModel = require('../models/advisors_availabilityModel.js');
 const router = express.Router();
 
 // Crear disponibilidad de asesor (advisorId debe existir en users)

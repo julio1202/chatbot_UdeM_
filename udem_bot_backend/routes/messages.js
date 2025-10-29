@@ -1,5 +1,5 @@
 const express = require('express');
-const MessagesModel = require('../models/messagesModel');
+const MessagesModel = require('../models/messagesModel.js');
 const router = express.Router();
 
 // Crear mensaje

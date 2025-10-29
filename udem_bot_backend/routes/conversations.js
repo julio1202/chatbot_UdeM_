@@ -1,5 +1,5 @@
 const express = require('express');
-const ConversationsModel = require('../models/conversationsModel');
+const ConversationsModel = require('../models/conversationsModel.js');
 const router = express.Router();
 
 // Crear conversación

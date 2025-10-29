@@ -1,5 +1,5 @@
 const express = require('express');
-const ReminderModel = require('../models/reminderModel');
+const ReminderModel = require('../models/reminderModel.js');
 const router = express.Router();
 
 // Crear recordatorio

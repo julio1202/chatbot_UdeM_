@@ -1,5 +1,5 @@
 const express = require('express');
-const GradeModel = require('../models/gradeModel');
+const GradeModel = require('../models/gradeModel.js');
 const router = express.Router();
 
 // Crear calificación
