@@ -1,5 +1,5 @@
 const express = require('express');
-const UserModel = require('../models/userModel');
+const UserModel = require('../models/userModel.js');
 const router = express.Router();
 
 // Ruta POST para crear usuario
