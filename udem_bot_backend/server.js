@@ -118,8 +118,8 @@ try {
   app.use('/api/reminders', remindersRouter);
   app.use('/api/grades', gradesRouter);
   app.use('/api/advisors_availability', advisorsAvailabilityRouter);
-  app.use('/api/messages', messagesRouter);
   app.use('/api/conversations', conversationsRouter);
+  app.use('/api/messages', messagesRouter);
 
   console.log('✅ Rutas cargadas correctamente');
 } catch (err) {

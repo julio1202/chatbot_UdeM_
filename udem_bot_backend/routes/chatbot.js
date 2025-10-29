@@ -1,11 +1,11 @@
-// routes/chatbot.js
 const express = require('express');
 const router = express.Router();
-const { openai } = require('../server');  // Importa openai desde server.js
+const OpenAI = require('openai');
 
-const { getUserByName, createUser, saveMessage, getLastMessages } = require('../models/chatbotModels');
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// POST /api/chatbot
+const { getUserByName, createUser, saveMessage, getLastMessages } = require('../models/chatbotModel.js');
+
 router.post('/', async (req, res) => {
   try {
     const { user, message } = req.body;
