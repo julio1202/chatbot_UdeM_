@@ -16,9 +16,9 @@ router.post('/', async (req, res) => {
 // Transferir a asesor humano
 router.put('/transfer/:id', async (req, res) => {
   const { id } = req.params;
-  const { advisorId } = req.body;
+  const { assignedAdvisorId, transferReason } = req.body;
   try {
-    const transferred = await ConversationsModel.transferConversation(id, advisorId);
+    const transferred = await ConversationsModel.transferConversation(id, assignedAdvisorId, transferReason);
     res.json({ success: true, conversation: transferred });
   } catch (err) {
     res.status(500).json({ error: 'Error transfiriendo conversación' });

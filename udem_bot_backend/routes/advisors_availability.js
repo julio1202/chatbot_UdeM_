@@ -1,19 +1,19 @@
 const express = require('express');
-const AdvisorsAvailabilityModel = require('../models/advisors_availabilityModel');
+const AdvisorsAvailabilityModel = require('../models/advisorsAvailabilityModel');
 const router = express.Router();
 
-// Crear asesor
+// Crear disponibilidad de asesor (advisorId debe existir en users)
 router.post('/', async (req, res) => {
-  const { name, email, available } = req.body;
+  const { advisorId, isAvailable } = req.body;
   try {
-    const advisor = await AdvisorsAvailabilityModel.createAdvisor(name, email, available);
+    const advisor = await AdvisorsAvailabilityModel.createAdvisor(advisorId, isAvailable);
     res.json({ success: true, advisor });
   } catch (err) {
-    res.status(500).json({ error: 'Error creando asesor' });
+    res.status(500).json({ error: 'Error creando disponibilidad de asesor' });
   }
 });
 
-// Listar asesores
+// Listar asesores con disponibilidad
 router.get('/', async (req, res) => {
   try {
     const advisors = await AdvisorsAvailabilityModel.getAllAdvisors();
@@ -24,25 +24,25 @@ router.get('/', async (req, res) => {
 });
 
 // Actualizar disponibilidad
-router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const { available } = req.body;
+router.put('/:advisorId', async (req, res) => {
+  const { advisorId } = req.params;
+  const { isAvailable } = req.body;
   try {
-    const updated = await AdvisorsAvailabilityModel.updateAvailability(id, available);
+    const updated = await AdvisorsAvailabilityModel.updateAvailability(advisorId, isAvailable);
     res.json({ success: true, advisor: updated });
   } catch (err) {
     res.status(500).json({ error: 'Error actualizando disponibilidad' });
   }
 });
 
-// Eliminar asesor
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
+// Eliminar disponibilidad
+router.delete('/:advisorId', async (req, res) => {
+  const { advisorId } = req.params;
   try {
-    await AdvisorsAvailabilityModel.deleteAdvisor(id);
+    await AdvisorsAvailabilityModel.deleteAdvisor(advisorId);
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: 'Error eliminando asesor' });
+    res.status(500).json({ error: 'Error eliminando disponibilidad' });
   }
 });
 

@@ -1,11 +1,11 @@
 const pool = require('../db');
 
 class AdvisorsAvailabilityModel {
-  static async createAdvisor(name, email, available = true) {
+  static async createAdvisor(advisorId, isAvailable = true) {  // Usa advisorId de users
     try {
       const result = await pool.query(
-        'INSERT INTO advisors (name, email, available) VALUES ($1, $2, $3) RETURNING *',
-        [name, email, available]
+        'INSERT INTO advisors_availability (advisor_id, is_available) VALUES ($1, $2) RETURNING *',
+        [advisorId, isAvailable]
       );
       return result.rows[0];
     } catch (err) {
@@ -15,18 +15,20 @@ class AdvisorsAvailabilityModel {
 
   static async getAllAdvisors() {
     try {
-      const result = await pool.query('SELECT * FROM advisors ORDER BY id');
+      const result = await pool.query(
+        'SELECT aa.*, u.name, u.email FROM advisors_availability aa JOIN users u ON aa.advisor_id = u.id ORDER BY aa.advisor_id'
+      );
       return result.rows;
     } catch (err) {
       throw err;
     }
   }
 
-  static async updateAvailability(advisorId, available) {
+  static async updateAvailability(advisorId, isAvailable) {
     try {
       const result = await pool.query(
-        'UPDATE advisors SET available = $1 WHERE id = $2 RETURNING *',
-        [available, advisorId]
+        'UPDATE advisors_availability SET is_available = $1, last_update = CURRENT_TIMESTAMP WHERE advisor_id = $2 RETURNING *',
+        [isAvailable, advisorId]
       );
       return result.rows[0];
     } catch (err) {
@@ -34,9 +36,9 @@ class AdvisorsAvailabilityModel {
     }
   }
 
-  static async deleteAdvisor(id) {
+  static async deleteAdvisor(advisorId) {
     try {
-      await pool.query('DELETE FROM advisors WHERE id = $1', [id]);
+      await pool.query('DELETE FROM advisors_availability WHERE advisor_id = $1', [advisorId]);
       return true;
     } catch (err) {
       throw err;

@@ -4,9 +4,9 @@ const router = express.Router();
 
 // Crear mensaje
 router.post('/', async (req, res) => {
-  const { conversationId, sender, message, confidence } = req.body;
+  const { conversationId, sender, messageText, confidence } = req.body;
   try {
-    const newMessage = await MessagesModel.createMessage(conversationId, sender, message, confidence);
+    const newMessage = await MessagesModel.createMessage(conversationId, sender, messageText, confidence);
     res.json({ success: true, message: newMessage });
   } catch (err) {
     res.status(500).json({ error: 'Error creando mensaje' });
