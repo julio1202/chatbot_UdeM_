@@ -1,59 +1,47 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel del Profesor - UdeM</title>
-  <link rel="stylesheet" href="profesor.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UdeM Bot - Panel Profesor</title>
+  <link rel="stylesheet" href="/css/profesor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-  <header>
-    <h1>📘 Panel del Profesor - UdeM</h1>
-    <p>Gestión de notas y cursos</p>
-  </header>
+  <div class="container">
 
-  <main>
-    <section class="notas">
-      <h2>📊 Notas de los Estudiantes</h2>
-
-      <div class="filtros">
-        <input type="text" id="buscarEstudiante" placeholder="Buscar por nombre o correo..." />
-        <button id="btnBuscar">Buscar</button>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+        <span class="logo-text">UdeM Bot</span>
       </div>
 
-      <table id="tablaNotas">
-        <thead>
-          <tr>
-            <th>Estudiante</th>
-            <th>Materia</th>
-            <th>Item</th>
-            <th>Nota</th>
-            <th>%</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <nav class="menu">
+        <a href="notas_rendimiento_p.html" class="active">
+          <i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span>
+        </a>
+        <a href="material_estudio_p.html">
+          <i class="fa-solid fa-book"></i><span>Material de estudio</span>
+        </a>
+      </nav>
 
-      <button id="btnAgregarNota">➕ Agregar Nota</button>
-    </section>
-
-    <section class="cursos">
-      <h2>📚 Administración de Cursos</h2>
-
-      <div class="nuevoCurso">
-        <input type="text" id="nombreCurso" placeholder="Nombre del nuevo curso" />
-        <button id="btnAgregarCurso">Agregar Curso</button>
+      <div class="settings">
+        <a href="#"><i class="fa-solid fa-user"></i></a>
+        <a href="#"><i class="fa-solid fa-gear"></i></a>
       </div>
+    </aside>
 
-      <ul id="listaCursos"></ul>
-    </section>
-  </main>
+    <!-- Contenido principal -->
+    <main class="content" id="mainContent">
+      <img src="/imagenes/udembt.jpg" alt="Campus UdeM">
+      <div class="overlay-image">
+        <img src="/imagenes/port2.jpg" alt="Logo sobre campus">
+      </div>
+    </main>
 
-  <footer>
-    <p>Universidad de Medellín - Sistema Académico © 2025</p>
-  </footer>
+  </div>
 
-  <script src="profesor.js"></script>
+  <script src="/js/menu_principal.js"></script>
 </body>
 </html>

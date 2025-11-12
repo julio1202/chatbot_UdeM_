@@ -36,26 +36,14 @@
     <!-- Segunda sidebar: lista de materias -->
     <aside class="subjects" id="subjects">
       <div class="subjects-header">
-        <h3>MATERIA</h3>
-        <button id="addSubjectBtn">✚ Agregar materia</button>
+        <h3>MATERIAS</h3>
       </div>
-      <small class="hint">💡 Doble click en una materia para editar su nombre</small>
       <ul id="subjectsList">
-        <li data-name="Fundamentos de software" class="active">
-          Fundamentos de software <button class="delete-btn">✘</button>
-        </li>
-        <li data-name="Modelos de datos">
-          Modelos de datos <button class="delete-btn">✘</button>
-        </li>
-        <li data-name="Física II">
-          Física II <button class="delete-btn">✘</button>
-        </li>
-        <li data-name="Cálculo de Varias Variables">
-          Cálculo de Varias Variables <button class="delete-btn">✘</button>
-        </li>
-        <li data-name="Legislación">
-          Legislación <button class="delete-btn">✘</button>
-        </li>
+        <li data-name="Fundamentos de software" class="active">Fundamentos de software</li>
+        <li data-name="Modelos de datos">Modelos de datos</li>
+        <li data-name="Física II">Física II</li>
+        <li data-name="Cálculo de Varias Variables">Cálculo de Varias Variables</li>
+        <li data-name="Legislación">Legislación</li>
       </ul>
     </aside>
 
@@ -73,21 +61,19 @@
               <th>NOTA (0–5.0)</th>
               <th>PORCENTAJE (%)</th>
               <th>TOTAL</th>
-              <th>ACCIONES</th>
             </tr>
           </thead>
           <tbody id="gradesBody">
-            <!-- Filas generadas dinámicamente por JS -->
+            <!-- Filas generadas por JS -->
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="4" class="final-label"><strong>PROMEDIO FINAL</strong></td>
+              <td colspan="3" class="final-label"><strong>PROMEDIO FINAL</strong></td>
               <td id="finalAverage">—</td>
             </tr>
           </tfoot>
         </table>
       </section>
-      <button id="addGradeBtn">✚ Agregar nota</button>
     </main>
 
   </div>

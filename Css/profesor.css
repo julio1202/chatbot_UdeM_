@@ -1,88 +1,136 @@
-body {
-  font-family: "Poppins", sans-serif;
-  background: #f7f9fc;
-  color: #333;
+/* Reset básico */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
-header {
-  background: #004aad;
-  color: #fff;
+body, html {
+  height: 100%;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: width 0.3s ease;
+}
+
+/* Sidebar colapsada */
+.sidebar.collapsed {
+  width: 70px;
+}
+
+/* Texto oculto cuando está colapsada */
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .menu span {
+  display: none;
+}
+
+/* Logo UdeM Bot */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 20px;
+  color: #b32025;
+}
+
+.bot-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* Menú */
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #333;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.menu a:hover {
+  background: #f5f5f5;
+}
+
+.menu a.active {
+  background: #f9f9f9;
+  border-left: 3px solid #b32025;
+  color: #b32025;
+  font-weight: bold;
+}
+
+/* Íconos */
+.menu i {
+  font-size: 1rem;
+  width: 20px;
   text-align: center;
-  padding: 1.5em;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-main {
+.settings {
   display: flex;
   justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 2em;
-  gap: 1.5em;
+  padding: 10px;
+  border-top: 1px solid #ddd;
 }
 
-section {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5em;
-  width: 45%;
-  min-width: 350px;
+.settings a {
+  color: #444;
+  font-size: 1.2rem;
+  text-decoration: none;
 }
 
-h2 {
-  color: #004aad;
-  margin-bottom: 0.8em;
+/* Contenido */
+.content {
+  flex: 1;
+  overflow: hidden;
 }
 
-table {
+.content img {
   width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+  height: 100%;
+  object-fit: cover;
 }
 
-th, td {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
+/* Imagen superpuesta centrada, se ajusta con el ancho de sidebar */
+.overlay-image {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 120px); /* 240px/2 para compensar la sidebar normal */
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease; /* animación suave */
 }
 
-th {
-  background-color: #e3eefe;
+.overlay-image img {
+  width: 400px;
+  height: auto;
 }
 
-input[type="number"] {
-  width: 60px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 4px;
-}
-
-button {
-  background: #004aad;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-button:hover {
-  background: #00327c;
-}
-
-#btnAgregarNota, #btnAgregarCurso {
-  margin-top: 10px;
-}
-
-footer {
-  background: #004aad;
-  color: white;
-  text-align: center;
-  padding: 1em;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
+/* Cuando la sidebar está colapsada */
+.sidebar.collapsed ~ .content .overlay-image {
+  left: calc(50% + 35px); /* 70px/2 para compensar sidebar reducida */
 }

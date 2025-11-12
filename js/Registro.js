@@ -115,13 +115,11 @@ document.addEventListener('DOMContentLoaded', () => {
           redirectUrl = 'menu_principal.html';
           break;
         case 'professor':
-          redirectUrl = 'notas_rendimiento.html';
+          redirectUrl = 'profesor.html';
           break;
         case 'advisor':
           redirectUrl = 'asesor_seguimiento.html';
           break;
-        default:
-          redirectUrl = 'menu_principal.html';
       }
 
       console.log('Redirigiendo a:', redirectUrl);

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UdeM Bot - Notas / Rendimiento (Profesor)</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="/css/notas_rendimiento.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Sidebar del profesor -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="/imagenes/zorro.png" alt="Logo Chat Bot" class="bot-logo">
+        <span class="logo-text">UdeM Bot</span>
+      </div>
+
+      <nav class="menu">
+        <a href="notas_rendimiento_p.html" class="active">
+          <i class="fa-solid fa-chart-line"></i><span>Notas/Rendimiento</span>
+        </a>
+        <a href="material_estudio_p.html">
+          <i class="fa-solid fa-book"></i><span>Material de estudio</span>
+        </a>
+      </nav>
+
+      <div class="settings">
+        <a href="#"><i class="fa-solid fa-user"></i></a>
+        <a href="#"><i class="fa-solid fa-gear"></i></a>
+      </div>
+    </aside>
+
+    <!-- Segunda sidebar: lista de materias -->
+    <aside class="subjects" id="subjects">
+      <input type="text" id="searchSubject" placeholder="Buscar materia...">
+      <div class="subjects-header">
+        <h3>MATERIAS</h3>
+        <button id="addSubjectBtn">✚ Agregar materia</button>
+
+      </div>
+      <small class="hint">💡 Doble click en una materia para editar su nombre</small>
+      <ul id="subjectsList">
+        <li data-name="Fundamentos de software" class="active">
+          Fundamentos de software <button class="delete-btn">✘</button>
+        </li>
+        <li data-name="Modelos de datos">
+          Modelos de datos <button class="delete-btn">✘</button>
+        </li>
+        <li data-name="Física II">
+          Física II <button class="delete-btn">✘</button>
+        </li>
+        <li data-name="Cálculo de Varias Variables">
+          Cálculo de Varias Variables <button class="delete-btn">✘</button>
+        </li>
+        <li data-name="Legislación">
+          Legislación <button class="delete-btn">✘</button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Contenido principal: tabla de notas -->
+    <main class="grades" id="mainContent">
+      <header class="grades-header">
+        <h2 id="subjectTitle">Fundamentos de software</h2>
+      </header>
+
+      <section class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ESTUDIANTE</th>
+              <th>ÍTEM</th>
+              <th>NOTA (0–5.0)</th>
+              <th>PORCENTAJE (%)</th>
+              <th>TOTAL</th>
+              <th>ACCIONES</th>
+            </tr>
+          </thead>
+          <tbody id="gradesBody">
+            <!-- Filas generadas dinámicamente por JS -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="final-label"><strong>PROMEDIO FINAL</strong></td>
+              <td id="finalAverage">—</td>
+            </tr>
+          </tfoot>
+        </table>
+      </section>
+      <button id="addGradeBtn">✚ Agregar nota</button>
+    </main>
+  </div>
+
+  <!-- Scripts para conexión con JS (dejados como estaban) -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/js/notas_rendimiento_p.js"></script>
+</body>
+</html>

@@ -23,10 +23,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
-    "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' http://localhost:3000"
+    "default-src 'self' http://localhost:3000; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: blob:; connect-src 'self' http://localhost:3000"
   );
   next();
 });
+
 
 // Archivos estáticos
 app.use('/html', express.static(path.join(__dirname, '..', 'html')));
@@ -114,6 +115,7 @@ try {
   const messagesRouter = require('./routes/messages');
   const conversationsRouter = require('./routes/conversations');
   const coursesRouter = require('./routes/courses');
+  const materiasRouter = require('./routes/materias');
 
   app.use('/api/users', usersRouter);
   app.use('/api/reminders', remindersRouter);
@@ -122,6 +124,7 @@ try {
   app.use('/api/conversations', conversationsRouter);
   app.use('/api/messages', messagesRouter);
   app.use('/api/courses', coursesRouter);
+  app.use('/api/materias', materiasRouter);
 
   console.log('✅ Rutas cargadas correctamente');
 } catch (err) {
